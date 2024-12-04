@@ -31,3 +31,49 @@ BEGIN
 END;
 //
 DELIMITER ;
+
+Pregunta 3 
+a)Interseccion entre la tabla sedes y filiales
+SELECT nombre, email FROM alumnos
+INTERSECT
+SELECT nombre, email FROM profesores;
+
+b)Union entre la tabla sedes y filiales
+SELECT nombre, id_sede 
+FROM filiales
+UNION
+SELECT nombre_departamento AS nombre, nombre_departamento AS id_sede
+FROM sedes;
+
+c)
+SELECT nombre, id_sede 
+FROM filiales
+EXCEPT
+SELECT nombre_departamento AS nombre, nombre_departamento AS id_sede
+FROM sedes;
+
+d)
+SELECT id_sede, COUNT(*) AS cantidad_filiales
+FROM filiales
+GROUP BY id_sede;
+
+e)
+SELECT *
+FROM filiales
+NATURAL JOIN sedes;
+
+f)
+SELECT f.nombre, f.id_sede, s.nombre_departamento, s.presupuesto
+FROM filiales f
+LEFT JOIN sedes s ON f.id_sede = s.nombre_departamento;
+
+g)
+SELECT f.nombre, f.id_sede, s.nombre_departamento, s.presupuesto
+FROM filiales f
+RIGHT JOIN sedes s ON f.id_sede = s.nombre_departamento;
+
+h)
+SELECT f.nombre, f.direccion, f.telefono, f.email, s.nombre_departamento, s.edificio, s.presupuesto
+FROM filiales f
+CROSS JOIN sedes s;
+
