@@ -18,3 +18,16 @@ INSERT INTO filiales (nombre, direccion, telefono, email, id_sede) VALUES
 ('Filial Oeste 2', 'Avenida Oeste 101', '321654988', 'oeste2@filial.com', 4),
 ('Filial Central 1', 'Calle Central 456', '741852963', 'central1@filial.com', 1),
 ('Filial Central 2', 'Avenida Central 789', '741852964', 'central2@filial.com', 1);
+
+DELIMITER //
+CREATE TRIGGER before_insert_filiales
+BEFORE INSERT ON filiales
+FOR EACH ROW
+BEGIN
+    IF NEW.telefono REGEXP '[^0-9]' THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'El número de teléfono debe contener solo números.';
+    END IF;
+END;
+//
+DELIMITER ;
